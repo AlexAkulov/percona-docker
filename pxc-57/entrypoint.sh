@@ -131,11 +131,11 @@ else
 	set +e
 
 	if [ -z "$PUBLISH_HOSTNAME" ]; then
-		hostname=$PUBLISH_HOSTNAME
-		ipaddr=$(getent hosts "$PUBLISH_HOSTNAME" | awk '{ print $1 }')
-	else
 		hostname=$(hostname)
 		ipaddr=$(hostname -i | awk ' { print $1 } ')
+	else
+		hostname=$PUBLISH_HOSTNAME
+		ipaddr=$(getent hosts "$PUBLISH_HOSTNAME" | awk '{ print $1 }')
 	fi
 
 	curl http://$DISCOVERY_SERVICE/v2/keys/pxc-cluster/queue/$CLUSTER_NAME -XPOST -d value=$ipaddr -d ttl=60
